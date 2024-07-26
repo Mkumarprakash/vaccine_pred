@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H1N1 Vaccine Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style type="text/css">
+        /* Container style */
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading style */
+.container h1 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Label style */
+label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+/* Input and select style */
+input[type="number"],
+select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    background-color: #fff;
+}
+
+/* Button style */
+button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+/* Prediction result style */
+.container h2 {
+    text-align: center;
+    font-size: 20px;
+    margin-top: 20px;
+    color: #333;
+}
+
+/* Style for required fields */
+input:required,
+select:required {
+    border-left: 5px solid #ff6347;
+}
+
+/* Style for the form */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Predict H1N1 Vaccine Adoption</h1>
+        <form action="{{ url_for('predict') }}" method="POST">
+            <label for="h1n1_concern">H1N1 Concern:</label>
+            <input type="number" name="h1n1_concern" step="0.01" required>
+            
+            <label for="h1n1_knowledge">H1N1 Knowledge:</label>
+            <input type="number" name="h1n1_knowledge" step="0.01" required>
+            
+            <label for="behavioral_antiviral_meds">Behavioral Antiviral Meds:</label>
+            <input type="number" name="behavioral_antiviral_meds" step="0.01" required>
+            
+            <label for="behavioral_avoidance">Behavioral Avoidance:</label>
+            <input type="number" name="behavioral_avoidance" step="0.01" required>
+            
+            <label for="behavioral_face_mask">Behavioral Face Mask:</label>
+            <input type="number" name="behavioral_face_mask" step="0.01" required>
+            
+            <label for="behavioral_wash_hands">Behavioral Wash Hands:</label>
+            <input type="number" name="behavioral_wash_hands" step="0.01" required>
+            
+            <label for="behavioral_large_gatherings">Behavioral Large Gatherings:</label>
+            <input type="number" name="behavioral_large_gatherings" step="0.01" required>
+            
+            <label for="behavioral_outside_home">Behavioral Outside Home:</label>
+            <input type="number" name="behavioral_outside_home" step="0.01" required>
+            
+            <label for="behavioral_touch_face">Behavioral Touch Face:</label>
+            <input type="number" name="behavioral_touch_face" step="0.01" required>
+            
+            <label for="doctor_recc_h1n1">Doctor Recommended H1N1 Vaccine:</label>
+            <input type="number" name="doctor_recc_h1n1" step="0.01" required>
+            
+            <label for="doctor_recc_seasonal">Doctor Recommended Seasonal Vaccine:</label>
+            <input type="number" name="doctor_recc_seasonal" step="0.01" required>
+            
+            <label for="chronic_med_condition">Chronic Medical Condition:</label>
+            <input type="number" name="chronic_med_condition" step="0.01" required>
+            
+            <label for="child_under_6_months">Child Under 6 Months:</label>
+            <input type="number" name="child_under_6_months" step="0.01" required>
+            
+            <label for="health_worker">Health Worker:</label>
+            <input type="number" name="health_worker" step="0.01" required>
+            
+            <label for="health_insurance">Health Insurance:</label>
+            <input type="number" name="health_insurance" step="0.01" required>
+            
+            <label for="opinion_h1n1_vacc_effective">Opinion on H1N1 Vaccine Effectiveness:</label>
+            <input type="number" name="opinion_h1n1_vacc_effective" step="0.01" required>
+            
+            <label for="opinion_h1n1_risk">Opinion on H1N1 Risk:</label>
+            <input type="number" name="opinion_h1n1_risk" step="0.01" required>
+            
+            <label for="opinion_h1n1_sick_from_vacc">Opinion on Getting Sick from H1N1 Vaccine:</label>
+            <input type="number" name="opinion_h1n1_sick_from_vacc" step="0.01" required>
+            
+            <label for="opinion_seas_vacc_effective">Opinion on Seasonal Vaccine Effectiveness:</label>
+            <input type="number" name="opinion_seas_vacc_effective" step="0.01" required>
+            
+            <label for="opinion_seas_risk">Opinion on Seasonal Risk:</label>
+            <input type="number" name="opinion_seas_risk" step="0.01" required>
+            
+            <label for="opinion_seas_sick_from_vacc">Opinion on Getting Sick from Seasonal Vaccine:</label>
+            <input type="number" name="opinion_seas_sick_from_vacc" step="0.01" required>
+            
+            <label for="age_group">Age Group:</label>
+            <select name="age_group" required>
+                <option value="0">18 - 34 Years</option>
+                <option value="1">35 - 44 Years</option>
+                <option value="2">45 - 54 Years</option>
+                <option value="3">55 - 64 Years</option>
+                <option value="4">65+ Years</option>
+            </select>
+            
+            <label for="education">Education:</label>
+            <select name="education" required>
+                <option value="0">< 12 Years</option>
+                <option value="1">12 Years</option>
+                <option value="2">Some College</option>
+                <option value="3">College Graduate</option>
+            </select>
+            
+            <label for="race">Race:</label>
+            <select name="race" required>
+                <option value="0">White</option>
+                <option value="1">Black</option>
+                <option value="2">Hispanic</option>
+                <option value="3">Other</option>
+            </select>
+            
+            <label for="sex">Sex:</label>
+            <select name="sex" required>
+                <option value="0">Male</option>
+                <option value="1">Female</option>
+            </select>
+            
+            <label for="income_poverty">Income Poverty:</label>
+            <select name="income_poverty" required>
+                <option value="0">Below Poverty</option>
+                <option value="1"><= $75,000, Above Poverty</option>
+                <option value="2">> $75,000</option>
+            </select>
+            
+            <label for="marital_status">Marital Status:</label>
+            <select name="marital_status" required>
+                <option value="0">Not Married</option>
+                <option value="1">Married</option>
+            </select>
+            
+            <label for="rent_or_own">Rent or Own:</label>
+            <select name="rent_or_own" required>
+                <option value="0">Rent</option>
+                <option value="1">Own</option>
+            </select>
+            
+            <label for="employment_status">Employment Status:</label>
+            <select name="employment_status" required>
+                <option value="0">Employed</option>
+                <option value="1">Not in Labor Force</option>
+                <option value="2">Unemployed</option>
+            </select>
+            
+            <label for="hhs_geo_region">HHS Geo Region:</label>
+            <select name="hhs_geo_region" required>
+                <option value="0">Region 1</option>
+                <option value="1">Region 2</option>
+                <option value="2">Region 3</option>
+                <option value="3">Region 4</option>
+                <option value="4">Region 5</option>
+                <option value="5">Region 6</option>
+                <option value="6">Region 7</option>
+                <option value="7">Region 8</option>
+                <option value="8">Region 9</option>
+                <option value="9">Region 10</option>
+            </select>
+            
+            <label for="census_msa">Census MSA:</label>
+            <select name="census_msa" required>
+                <option value="0">Non-MSA</option>
+                <option value="1">MSA, Not Principal City</option>
+                <option value="2">MSA, Principal City</option>
+            </select>
+            
+            <label for="household_adults">Household Adults:</label>
+            <input type="number" name="household_adults" step="0.01" required>
+            
+            <label for="household_children">Household Children:</label>
+            <input type="number" name="household_children" step="0.01" required>
+            
+            <button type="submit">Predict</button>
+        </form>
+        {% if prediction is not none %}
+            <h2>Prediction: {{ prediction }}</h2>
+        {% endif %}
+            
+    </div>
+</body>
+</html>
